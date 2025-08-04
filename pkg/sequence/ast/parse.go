@@ -1,22 +1,21 @@
-package parse
+package ast
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/ufukty/diagramer/pkg/sequence/ast"
 	"github.com/ufukty/diagramer/pkg/sequence/lexer"
 )
 
-func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
-	diagram := &ast.Diagram{
-		Stmts: []ast.Stmt{},
-		Opts:  ast.DiagramOpts{},
+func Parse(l *lexer.Diagram) (*Diagram, error) {
+	diagram := &Diagram{
+		Stmts: []Stmt{},
+		Opts:  DiagramOpts{},
 	}
 
 	errs := []string{}
-	lls := map[string]*ast.LifelineDecl{} // name => node
-	stack := []ast.ScopeDefining{}
+	lls := map[string]*LifelineDecl{} // name => node
+	stack := []ScopeDefining{}
 	for _, stmt := range l.Lines {
 		latest := stack[len(stack)-1]
 
@@ -56,7 +55,7 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 			panic("not implemented")
 
 		case *lexer.LifelineDecl:
-			ll := &ast.LifelineDecl{
+			ll := &LifelineDecl{
 				Type:  stmt.Type,
 				Alias: stmt.Alias,
 				Name:  stmt.Name,
@@ -68,7 +67,7 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 			panic("not implemented")
 
 		case *lexer.Message:
-			latest.AppendStmt(&ast.Message{
+			latest.AppendStmt(&Message{
 				Activation: stmt.Activation,
 				Content:    stmt.Content,
 				From:       stmt.From,
