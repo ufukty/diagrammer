@@ -73,9 +73,7 @@ Sequence diagrams are mainly consist of series of lifelines laid out at the hori
 
 ### Lifelines
 
-Both of the participants and actors involved in a sequence diagram are called lifelines. They are the both ends of each message in the diagram. They are either declared at the start of diagram, or created and destroyed during the sequence proceed following the message performs the action. Multiple lifelines can be wrapped with a box to group them in the render.
-
-#### Declare
+Lifelines are the both ends of each message in the diagram. They are either declared at the start of diagram, or created and destroyed during the sequence proceed following the message performs the action. Multiple lifelines can be wrapped with a box to group them in the render.
 
 Lifelines are declared as either **participant** or **actor** with or without aliasing. Aliases lets you refer to the lifeline using shorter names (such as initials) later in the diagram code without the head box text losing its descriptiveness. Declaring lifelines is not required. Mentioning messages trigger implicit lifeline declaration with defaults.
 
