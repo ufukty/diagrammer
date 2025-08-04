@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/ufukty/diagramer/pkg/sequence/ast"
 	"github.com/ufukty/diagramer/pkg/sequence/lexer"
-	"github.com/ufukty/diagramer/pkg/sequence/parse"
 )
 
 func Render(dst io.Writer, src io.Reader) error {
@@ -14,7 +14,7 @@ func Render(dst io.Writer, src io.Reader) error {
 		return fmt.Errorf("lexer: %w", err)
 	}
 
-	_, err = parse.Parse(l)
+	_, err = ast.Parse(l)
 	if err != nil {
 		return fmt.Errorf("parsing: %w", err)
 	}
