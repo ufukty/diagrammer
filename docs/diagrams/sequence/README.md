@@ -155,29 +155,33 @@ note right of alice: to be.
 
 All control flow commands are blocks; they all need to be terminated with an `end` statement. Some support multiple cases. They all posses a title (or description) field that is drawn at the top-center of the bounding box. They all styled same with only differentiating factor being the block's type written on the top-left of the bounding box.
 
-#### Break
+#### Single case
+
+##### Break
 
 `break`
 
-#### Loop
+##### Loop
 
 `loop`
 
-#### Critical
-
-`critical`
-
-#### Option
+##### Option
 
 `option`
 
-#### Parallel
+#### Multi case
 
-`parallel`
-
-#### Alt
+##### Alternative
 
 `alt`
+
+##### Critical
+
+`critical`
+
+##### Parallel
+
+`parallel`
 
 ## Comparisons
 
