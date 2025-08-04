@@ -15,7 +15,7 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 	}
 
 	errs := []string{}
-	lls := map[string]*ast.Lifeline{} // name => node
+	lls := map[string]*ast.LifelineDecl{} // name => node
 	stack := []ast.ScopeDefining{}
 	for _, stmt := range l.Lines {
 		latest := stack[len(stack)-1]
@@ -56,7 +56,7 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 			panic("not implemented")
 
 		case *lexer.LifelineDecl:
-			ll := &ast.Lifeline{
+			ll := &ast.LifelineDecl{
 				Type:  stmt.Type,
 				Alias: stmt.Alias,
 				Name:  stmt.Name,
@@ -68,18 +68,11 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 			panic("not implemented")
 
 		case *lexer.Message:
-			from, ok := lls[stmt.From]
-			if !ok {
-				errs = append(errs, fmt.Sprintf("the sender %s is not previously declared", from))
-			}
-			to, ok := lls[stmt.To]
-			if !ok {
-				errs = append(errs, fmt.Sprintf("the receiver %s is not previously declared", to))
-			}
 			latest.AppendStmt(&ast.Message{
-				From:    from,
-				To:      to,
-				Content: stmt.Content,
+				Activation: stmt.Activation,
+				Content:    stmt.Content,
+				From:       stmt.From,
+				To:         stmt.To,
 			})
 
 		case *lexer.Note:

@@ -1,69 +1,81 @@
 package ast
 
-type Lifeline struct {
-	Type  string
-	Alias string
-	Name  string
+import "github.com/ufukty/diagramer/pkg/sequence/lexer/tokens"
+
+type (
+	LifelineDecl struct {
+		Type  string
+		Alias string
+		Name  string
+	}
+
+	Create struct {
+		LifelineDecl
+	}
+
+	Destroy struct {
+		Name string
+	}
+
+	Box struct {
+		Color string
+		Title string
+	}
+
+	Activate struct {
+		Lifeline string
+	}
+
+	Deactivate struct {
+		Lifeline string
+	}
+)
+
+type (
+	Message struct {
+		From, To   string
+		Content    string
+		Activation tokens.Activation
+	}
+
+	Note struct {
+		Lifeline string
+		Pos      tokens.NotePos
+		Content  string
+	}
+
+	WideNote struct {
+		From, To string
+		Content  string
+	}
+)
+
+type Case struct {
+	Annotation string
+	Stmts      []Stmt
 }
 
-type Message struct {
-	From, To *Lifeline
-	Content  string
-}
+// Single case blocks
+type (
+	Break    Case
+	Loop     Case
+	Optional Case
+)
 
-type Note struct {
-	From, To *Lifeline
-	Content  string
-}
+// Multi case blocks
+type (
+	Alternative []Case
+	Critical    []Case
+	Parallel    []Case
+)
 
-// MARK: Single block
+type (
+	DiagramOpts struct {
+		AutoNumber bool
+	}
 
-type Break struct {
-	Description string
-	Stmts       []Stmt
-}
-
-type Loop struct {
-	Description string
-	Stmts       []Stmt
-}
-
-// MARK: Multiple blocks
-
-type CriticalRegionBlock struct {
-	Description string
-	Stmts       []Stmt
-}
-
-type CriticalRegion struct {
-	Blocks []CriticalRegionBlock
-}
-
-type ParallelBlock struct {
-	Description string
-	Stmts       []Stmt
-}
-
-type Parallel struct {
-	Blocks []ParallelBlock
-}
-
-type AltBlock struct {
-	Description string
-	Stmts       []Stmt
-}
-
-type Alt struct {
-	Blocks []AltBlock
-}
-
-// MARK: Diagram
-
-type DiagramOpts struct {
-	AutoNumber bool
-}
-
-type Diagram struct {
-	Stmts []Stmt
-	Opts  DiagramOpts
-}
+	Diagram struct {
+		Stmts []Stmt
+		Opts  DiagramOpts
+	}
+)
