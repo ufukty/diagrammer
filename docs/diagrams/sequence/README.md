@@ -192,6 +192,7 @@ The Diagrammer's sequence diagram syntax is based on the Mermaid diagrams with s
 - Only the HEX codes starts with a `#` and are 3-8 characters long are recognized as color codes.
 - All note blocks needs to contain positioning. There is no defaulting to `over`.
 - Diagrammer can create the diagram without some blocks are given titles, descriptions are message contents. Any text following `:` (and the symbol itself) is optional.
+- Diagrammer doesn't treat `<br>` tags specially. They just passed to the output as they are. Although their use is mostly unneeded if not all harmful as automatic text wrapping performed by the browser will make better use of the available viewport space by cutting lines only when the horizontal line is not enough, which is mostly the mobile displays where the vertical space allows more lines to be presented at the same time.
 
 ## Output
 
