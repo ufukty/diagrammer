@@ -55,14 +55,12 @@ type Case struct {
 	Stmts      []Stmt
 }
 
-// Single case blocks
 type (
 	Break    Case
 	Loop     Case
 	Optional Case
 )
 
-// Multi case blocks
 type (
 	Alternative []Case
 	Critical    []Case
