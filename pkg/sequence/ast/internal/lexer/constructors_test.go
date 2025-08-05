@@ -5,7 +5,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/ufukty/diagramer/pkg/sequence/lexer/tokens"
+	"github.com/ufukty/diagramer/pkg/sequence/ast/internal/lexer/tokens"
 )
 
 func TestActivate(t *testing.T) {

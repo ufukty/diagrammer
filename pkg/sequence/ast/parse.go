@@ -2,12 +2,18 @@ package ast
 
 import (
 	"fmt"
+	"io"
 	"strings"
 
-	"github.com/ufukty/diagramer/pkg/sequence/lexer"
+	"github.com/ufukty/diagramer/pkg/sequence/ast/internal/lexer"
 )
 
-func Parse(l *lexer.Diagram) (*Diagram, error) {
+func Parse(src io.Reader) (*Diagram, error) {
+	l, err := lexer.FromReader(src)
+	if err != nil {
+		return nil, fmt.Errorf("lexer: %w", err)
+	}
+
 	diagram := &Diagram{
 		Stmts: []Stmt{},
 		Opts:  DiagramOpts{},

@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ufukty/diagramer/pkg/sequence/lexer/tokens"
+	"github.com/ufukty/diagramer/pkg/sequence/ast/internal/lexer/tokens"
 )
 
 func startsWith(line, word string) bool {

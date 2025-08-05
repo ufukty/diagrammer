@@ -1,6 +1,6 @@
 package ast
 
-import "github.com/ufukty/diagramer/pkg/sequence/lexer/tokens"
+import "github.com/ufukty/diagramer/pkg/sequence/ast/internal/lexer/tokens"
 
 type (
 	LifelineDecl struct {
