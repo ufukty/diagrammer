@@ -4,9 +4,5 @@ type ScopeDefining interface {
 	AppendStmt(Stmt)
 }
 
-func (sd *AltBlock) AppendStmt(stmt Stmt)            { sd.Stmts = append(sd.Stmts, stmt) }
-func (sd *Break) AppendStmt(stmt Stmt)               { sd.Stmts = append(sd.Stmts, stmt) }
-func (sd *CriticalRegionBlock) AppendStmt(stmt Stmt) { sd.Stmts = append(sd.Stmts, stmt) }
-func (sd *Diagram) AppendStmt(stmt Stmt)             { sd.Stmts = append(sd.Stmts, stmt) }
-func (sd *Loop) AppendStmt(stmt Stmt)                { sd.Stmts = append(sd.Stmts, stmt) }
-func (sd *ParallelBlock) AppendStmt(stmt Stmt)       { sd.Stmts = append(sd.Stmts, stmt) }
+func (c *Case) AppendStmt(stmt Stmt)    { c.Stmts = append(c.Stmts, stmt) }
+func (d *Diagram) AppendStmt(stmt Stmt) { d.Stmts = append(d.Stmts, stmt) }

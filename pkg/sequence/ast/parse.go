@@ -1,22 +1,27 @@
-package parse
+package ast
 
 import (
 	"fmt"
+	"io"
 	"strings"
 
-	"github.com/ufukty/diagramer/pkg/sequence/ast"
-	"github.com/ufukty/diagramer/pkg/sequence/lexer"
+	"github.com/ufukty/diagramer/pkg/sequence/ast/internal/lexer"
 )
 
-func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
-	diagram := &ast.Diagram{
-		Stmts: []ast.Stmt{},
-		Opts:  ast.DiagramOpts{},
+func Parse(src io.Reader) (*Diagram, error) {
+	l, err := lexer.FromReader(src)
+	if err != nil {
+		return nil, fmt.Errorf("lexer: %w", err)
+	}
+
+	diagram := &Diagram{
+		Stmts: []Stmt{},
+		Opts:  DiagramOpts{},
 	}
 
 	errs := []string{}
-	lls := map[string]*ast.Lifeline{} // name => node
-	stack := []ast.ScopeDefining{}
+	lls := map[string]*LifelineDecl{} // name => node
+	stack := []ScopeDefining{}
 	for _, stmt := range l.Lines {
 		latest := stack[len(stack)-1]
 
@@ -56,7 +61,7 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 			panic("not implemented")
 
 		case *lexer.LifelineDecl:
-			ll := &ast.Lifeline{
+			ll := &LifelineDecl{
 				Type:  stmt.Type,
 				Alias: stmt.Alias,
 				Name:  stmt.Name,
@@ -68,18 +73,11 @@ func Parse(l *lexer.Diagram) (*ast.Diagram, error) {
 			panic("not implemented")
 
 		case *lexer.Message:
-			from, ok := lls[stmt.From]
-			if !ok {
-				errs = append(errs, fmt.Sprintf("the sender %s is not previously declared", from))
-			}
-			to, ok := lls[stmt.To]
-			if !ok {
-				errs = append(errs, fmt.Sprintf("the receiver %s is not previously declared", to))
-			}
-			latest.AppendStmt(&ast.Message{
-				From:    from,
-				To:      to,
-				Content: stmt.Content,
+			latest.AppendStmt(&Message{
+				Activation: stmt.Activation,
+				Content:    stmt.Content,
+				From:       stmt.From,
+				To:         stmt.To,
 			})
 
 		case *lexer.Note:
